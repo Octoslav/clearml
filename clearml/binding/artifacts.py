@@ -6,6 +6,7 @@ import mimetypes
 import os
 import pickle
 from six.moves.urllib.parse import quote
+from shutil import move
 from copy import deepcopy
 from datetime import datetime
 from multiprocessing.pool import ThreadPool
@@ -1138,7 +1139,7 @@ class Artifacts(object):
             temp_folder, prefix, suffix = self._temp_files_lookup.pop(local_filename)
             fd, temp_filename = mkstemp(prefix=prefix, suffix=suffix)
             os.close(fd)
-            os.replace(local_filename, temp_filename)
+            move(local_filename, temp_filename)
             local_filename = temp_filename
             os.rmdir(temp_folder)
         except Exception as ex:
